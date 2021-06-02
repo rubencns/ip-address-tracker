@@ -64,6 +64,14 @@
       margin-top: 12px;
       padding: 5px 10px;
       border-radius: $border-radius;
+
+      p {
+        text-transform: lowercase;
+      }
+
+      p::first-letter {
+        text-transform: uppercase;
+      }
     }
   }
 

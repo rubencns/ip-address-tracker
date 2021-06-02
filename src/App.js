@@ -36,7 +36,11 @@ function App() {
             <img src={RightArrow} alt="right arrow" />
           </button>
         </form>
-        {error && <p className="app-error">{error}</p>}
+        {error && (
+          <div className="app-error">
+            <p>{error}</p>
+          </div>
+        )}
 
         <Details geoDetails={data} />
       </div>
