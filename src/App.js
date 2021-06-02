@@ -1,23 +1,55 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react';
+import Map from './components/map/map';
+import RightArrow from './assets/svg/icon-arrow.svg';
+import Details from './components/details/details';
+import useGeoLocation from './hooks/useGeoLocation';
+import Loader from './components/loader/loader';
+import './app-style.scss';
 
 function App() {
+  const [query, setQuery] = useState('');
+  const [input, setInput] = useState('');
+  const { data, loading, error } = useGeoLocation(query);
+
+  const handleInputChange = (e) => setInput(e.target.value);
+
+  const handleQuerySubmit = (e) => {
+    e.preventDefault();
+    setQuery(input);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <div className="app-header">
+        <div className="app-header-title">
+          <h1>IP Address Tracker</h1>
+        </div>
+        <form className="app-header-search" onSubmit={handleQuerySubmit}>
+          <input
+            className="app-header-search-input"
+            type="text"
+            placeholder="Search for any IP address or domain"
+            value={input}
+            onChange={handleInputChange}
+          />
+          <button className="app-header-search-button">
+            <img src={RightArrow} alt="right arrow" />
+          </button>
+        </form>
+        {error && <p className="app-error">{error}</p>}
+
+        <Details geoDetails={data} />
+      </div>
+      <div className="app-map">
+        {loading && (
+          <div className="app-map-loader">
+            <Loader />
+            <p>Map loading...</p>
+          </div>
+        )}
+        {!data.location && !loading && <p>No map available.</p>}
+        {data.location && !loading && <Map location={data.location} />}
+      </div>
     </div>
   );
 }

@@ -1,0 +1,14 @@
+.map {
+  height: 100%;
+  width: 100%;
+}
+
+.map-popup {
+  p {
+    margin: 0;
+
+    &:first-child {
+      margin-bottom: 6px;
+    }
+  }
+}
