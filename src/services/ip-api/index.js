@@ -1,5 +1,5 @@
 export async function fetchGeoLocation(query) {
-  return await fetch(`https://ip-api.com/json/${query}`)
+  return await fetch(`http://ip-api.com/json/${query}`)
     .then((res) => res.json())
     .then((res) => {
       if (res.status === 'fail') throw new Error(res.message);
